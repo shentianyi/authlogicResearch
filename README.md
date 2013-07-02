@@ -1,0 +1,4 @@
+authlogicResearch
+=================
+
+for studying
