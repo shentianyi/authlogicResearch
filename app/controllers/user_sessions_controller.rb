@@ -1,9 +1,15 @@
 class UserSessionsController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => :destroy
+  before_filter :require_user, :only => [:destroy,:show]
+
+  def show
+    @session = session
+
+  end
 
   def new
   @user_session= UserSession.new
+
   end
 
 
@@ -11,20 +17,19 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
 
     if @user_session.save
-      respond_to do |format|
-        format.json {render :json =>{:success=>ture,:redirected_to=>redirect_or_default}}
-        format.html {
+
           flash[:notice]='successfully signed in'
-          redirect_or_default
-        }
-      end
+          session[:currentUser] =  current_user
+           redirect_to '/UserSessions/show'
+
     else
-      format.json {render :json =>{:success=>false}}
-      format.html {
+
         flash[:alert] = 'wrong username or password'
         render :action => 'new'
-      }
+
+
     end
+
   end
 
 
@@ -32,7 +37,8 @@ class UserSessionsController < ApplicationController
   def destroy
     current_user_session.destroy
     flash[:notice] = "Logout successful!"
-    redirect_back_or_default new_user_session_url
+
+    redirect_to :action=> 'new'
   end
 
 end

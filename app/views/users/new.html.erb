@@ -1,0 +1,39 @@
+<h1>Register</h1>
+
+<%= form_for @user, :url=>'/users/create' do |form| %>
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+      <% end %>
+    </ul>
+
+    <p>
+      <%= form.label :email %><br />
+      <%= form.text_field :email %>
+    </p>
+
+    <p>
+      <%= form.label :email %><br />
+      <%= form.text_field :email %>
+    </p>
+
+    <p>
+      <%= form.label :email %><br />
+      <%= form.text_field :email %>
+    </p>
+
+
+    <p>
+      <%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
+      <%= form.password_field :password %>
+    </p>
+    <p>
+      <%= form.label :password_confirmation %><br />
+      <%= form.password_field :password_confirmation %>
+    </p>
+    <%= form.submit "Register" %>
+    <%= flash[:notice] %>
+    <%=flash[:alert]%>
+<% end %>
+

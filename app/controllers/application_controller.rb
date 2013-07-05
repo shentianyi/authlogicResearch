@@ -4,10 +4,14 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user
   #filter_parameter_logging :password, :password_confirmation
 
-  private
+ private
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
     @current_user_session = UserSession.find
+  end
+
+  def render_internal_error_page
+    render :template => '/errors/500'
   end
 
   def current_user
@@ -19,7 +23,7 @@ class ApplicationController < ActionController::Base
     unless current_user
       store_location
       flash[:notice] = "You must be logged in to access this page"
-      redirect_to new_user_session_url
+      redirect_to '/UserSessions/new'
       return false
     end
   end
@@ -28,7 +32,7 @@ class ApplicationController < ActionController::Base
     if current_user
       store_location
       flash[:notice] = "You must be logged out to access this page"
-      redirect_to account_url
+
       return false
     end
   end

@@ -1,7 +1,7 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
-      t.string    :login,               :null => false                # optional, you can use email instead, or both
+      #t.string    :login,               :null => false                # optional, you can use email instead, or both
       t.string    :email,               :null => false                # optional, you can use login instead, or both
       t.string    :crypted_password,    :null => false                # optional, see below
       t.string    :password_salt,       :null => false                # optional, but highly recommended
@@ -17,6 +17,18 @@ class CreateUsers < ActiveRecord::Migration
       t.datetime  :last_login_at                                      # optional, see Authlogic::Session::MagicColumns
       t.string    :current_login_ip                                   # optional, see Authlogic::Session::MagicColumns
       t.string    :last_login_ip                                      # optional, see Authlogic::Session::MagicColumns
+
+
+# User status Related
+      t.integer :status, :null =>false, :default =>0
+      t.boolean :confirmed, :null=>false, :default=>false
+
+# Tenant Status
+      t.integer :tenantId
+
+
+
+# Timestamp
       t.timestamps
     end
   end
